@@ -27,7 +27,7 @@ export class ConnexionComponent {
     if(this.form.valid) { 
       this.authService.connexion(this.form.getRawValue()).subscribe({
         next: () => {
-          this.router.navigateByUrl('/profil');
+          this.router.navigateByUrl('/');
         },
         error: (err) => {
           this.error = err?.error || 'Une erreur est survenue. Veuillez réessayer';
@@ -35,5 +35,4 @@ export class ConnexionComponent {
       });
     }
   } 
-
 }
