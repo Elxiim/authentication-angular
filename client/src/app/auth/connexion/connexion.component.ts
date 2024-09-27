@@ -27,10 +27,10 @@ export class ConnexionComponent {
     if(this.form.valid) { 
       this.authService.connexion(this.form.getRawValue()).subscribe({
         next: () => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/profil');
         },
         error: (err) => {
-          this.error = err?.error || 'Une erreur est survenue. Veuillez réessayer';
+          this.error = err?.error || 'Mauvais mot de passe / email';
         }
       });
     }
