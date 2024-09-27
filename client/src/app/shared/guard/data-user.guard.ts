@@ -1,19 +1,26 @@
 import { Injectable, inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, first, map, of, switchMap, tap } from 'rxjs';
+import { CanActivate, CanActivateFn, UrlTree } from '@angular/router';
+import { Observable, first, map, mapTo, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { User } from '../interfaces/user.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class DataUserGuard implements CanActivate {
+export const dataUserGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  return authService.user$.pipe(
+    first(),
+    switchMap((user: User | null): Observable<true> => {
+      if (!user) {
+        return authService.fetchCurrentUser().pipe(mapTo(true));
+      } else {
+        return of(true);
+      }
+    })
+  );
+};
 
-  constructor(private authService: AuthService) {}
 
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
-    return this.authService.user$.pipe(
+/**
+ *     return this.authService.user$.pipe(
       first(),
       switchMap((user: User | null) => {
         if(user) {
@@ -28,6 +35,4 @@ export class DataUserGuard implements CanActivate {
         }
       })
     )
-  }
-  
-}
+ */
