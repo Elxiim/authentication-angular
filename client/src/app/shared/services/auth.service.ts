@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
 })
 export class AuthService {
   public isLoggedin$: ReplaySubject<boolean> = new ReplaySubject(1);
-  public user$ = new BehaviorSubject<User | null>(null)
+  public user$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null)
 
   public fetchCurrentUser(): Observable<User> {
     return this.http.get<User>('/api/auth/currentuser').pipe(
@@ -23,7 +23,7 @@ export class AuthService {
     )
   }
 
-  public inscription(user: User) {
+  public inscription(user: User): Observable<User> {
     return this.http.post<User>('/api/user', user);
   }
 
@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   public logout() : Observable<any> {
-    return this.http.get('/api/auth/logout').pipe(
+    return this.http.delete('/api/auth/logout').pipe(
       tap(() => {
         this.user$.next(null)
       })
