@@ -30,10 +30,9 @@ export class ConnexionComponent {
           this.router.navigateByUrl('/profil');
         },
         error: (err) => {
-          this.error = err?.error || 'Une erreur est survenue. Veuillez réessayer';
+          this.error = err?.error || 'Mauvais mot de passe / email';
         }
       });
     }
   } 
-
 }

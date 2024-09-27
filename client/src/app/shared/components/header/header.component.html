@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <a routerLink="/">Logo</a>
-    <ul>
+    <ul *ngIf="!isLoggedin">
         <li class="m-10">
             <a routerLink="connexion">Connexion</a>
         </li>
@@ -8,4 +8,13 @@
             <a routerLink="inscription">Inscription</a>
         </li>
     </ul>
+    <ul *ngIf="isLoggedin">
+        <li class="m-10">
+            <a routerLink="profil">Profil</a>
+        </li>
+        <li class="deco" (click)="logout.emit(true)" class="m-10">
+            Déconnexion
+        </li>
+    </ul>
+    
 </mat-toolbar>

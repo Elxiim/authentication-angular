@@ -1,5 +1,5 @@
 <div class="container">
-  <app-header></app-header>
+  <app-header (logout)="logout()" [isLoggedin]="isLoggedin$ | async"></app-header>
   <div class="p-20">
     <router-outlet></router-outlet>
   </div>
