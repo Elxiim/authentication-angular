@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../shared/interfaces/user.interface';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-profil',
@@ -6,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./profil.component.scss']
 })
 export class ProfilComponent {
+  public user$: Observable<User | null> = this.authService.user$.asObservable();
 
+  constructor(private authService: AuthService) {}
 }
