@@ -13,15 +13,16 @@ router.get('/currentuser', async(req, res) => {
         try {
             const decodedToken = jwt.verify(token, RSA_PUBLIC)
             if(decodedToken) {
-                const user = await User.findById(decodedToken.sub).select('-password -__v');
+                const user = await User.findById(decodedToken.sub).select('-password -__v').exec();
 
                 if(user) {
                    return res.json(user)
                 } else {
                     return res.json(null)
                 }
+            } else {
+                return res.json(null)
             }
-            return res.json(null)
         } catch (error) {
             console.error(error);
             return res.json(null)
@@ -53,9 +54,9 @@ router.post('/connexion', async(req, res) => {
 
 })
 
-router.get('/logout', (req, res) => {
-    return res.clearCookie('token')
-    // res.end()
+router.delete('/logout', (req, res) => {
+    res.clearCookie('token')
+    res.end()
 })
 
 module.exports = router
