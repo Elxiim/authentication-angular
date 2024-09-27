@@ -4,13 +4,14 @@ import { ConnexionComponent } from './auth/connexion/connexion.component';
 import { HomeComponent } from './home/home.component';
 import { InscriptionComponent } from './auth/inscription/inscription.component';
 import { ProfilComponent } from './profil/profil.component';
-import { DataUserGuard } from './shared/guard/data-user.guard';
+import { dataUserGuard } from './shared/guard/data-user.guard';
+import { authGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'connexion', canActivate: [DataUserGuard], component: ConnexionComponent },
-  { path: 'inscription', canActivate: [DataUserGuard],component: InscriptionComponent },
-  { path: 'profil' ,component: ProfilComponent },
+  { path: '', canActivate: [dataUserGuard], component: HomeComponent },
+  { path: 'connexion', canActivate: [dataUserGuard], component: ConnexionComponent },
+  { path: 'inscription', canActivate: [dataUserGuard],component: InscriptionComponent },
+  { path: 'profil', canActivate: [dataUserGuard, authGuard] ,component: ProfilComponent },
 ];
 
 @NgModule({
